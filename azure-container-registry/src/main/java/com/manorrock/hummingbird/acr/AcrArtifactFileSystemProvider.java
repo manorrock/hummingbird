@@ -80,6 +80,11 @@ public class AcrArtifactFileSystemProvider extends FileSystemProvider {
     public FileSystem getFileSystem(URI uri) {
         return CACHE.get(uri.normalize().getAuthority());
     }
+    
+    @Override
+    public Path getPath(URI uri) {
+        return new AcrArtifactFileSystemPath(uri);
+    }
 
     @Override
     public FileChannel newFileChannel(
@@ -88,17 +93,17 @@ public class AcrArtifactFileSystemProvider extends FileSystemProvider {
             FileAttribute<?>... attrs)
             throws IOException {
         
-        return null;
+        FileChannel fileChannel = null;
+        if (path instanceof AcrArtifactFileSystemPath) {
+            
+        }
+        return fileChannel;
     }
 
     // ------------------------------------------------------------------------
     //  Unsupported methods below
     // ------------------------------------------------------------------------
     
-    @Override
-    public Path getPath(URI uri) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
     @Override
     public SeekableByteChannel newByteChannel(Path path, Set<? extends OpenOption> options, FileAttribute<?>... attrs) throws IOException {
