@@ -29,6 +29,7 @@ package com.manorrock.hummingbird.acr;
 import java.net.URI;
 import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -75,6 +76,7 @@ public class AcrArtifactFileSystemProviderTest {
      * 
      * @throws Exception when a serious error occurs.
      */
+    @Disabled
     @Test
     public void testNewFileChannel() throws Exception {
         AcrArtifactFileSystemProvider provider = new AcrArtifactFileSystemProvider();
