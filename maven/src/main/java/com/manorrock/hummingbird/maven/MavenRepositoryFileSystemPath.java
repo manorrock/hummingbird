@@ -24,8 +24,9 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.acr;
+package com.manorrock.hummingbird.maven;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.FileSystem;
@@ -34,27 +35,82 @@ import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import static java.util.regex.Pattern.matches;
 
 /**
- * An ACR artifact file-system path.
+ * A Maven repository FileSystem backed Path.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class AcrArtifactFileSystemPath implements Path {
+public class MavenRepositoryFileSystemPath implements Path {
+    
+    /**
+     * Stores the group id.
+     */
+    private String groupId;
+    
+    /**
+     * Stores the artifact id.
+     */
+    private String artifactId;
+    
+    /**
+     * Stores the version.
+     */
+    private String version;
 
-    public AcrArtifactFileSystemPath(URI uri) {
+    /**
+     * Stores the file system.
+     */
+    private FileSystem fileSystem;
+    
+    /**
+     * Constructor.
+     * 
+     * @param fileSystem the file system.
+     * @param uri the URI.
+     */
+    public MavenRepositoryFileSystemPath(FileSystem fileSystem, URI uri) {
+        this.fileSystem = fileSystem;
+        parse(uri);
     }
 
     @Override
     public FileSystem getFileSystem() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return fileSystem;
     }
 
     @Override
     public boolean isAbsolute() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return true;
     }
 
+    /**
+     * Parse out the groupId, artifactId and version.
+     * 
+     * @param uri the URI to parse.
+     */
+    private void parse(URI uri) {
+        System.out.println("Path: " + uri.getPath());
+        Pattern pattern = Pattern.compile("/(.+)/(.+)/(.+)(/(.+))?");
+        Matcher matcher = pattern.matcher(uri.getPath());
+        System.out.println(matcher.matches());
+        System.out.println(matcher.group(1));
+        System.out.println(matcher.group(2));
+        System.out.println(matcher.group(3));
+        System.out.println(matcher.groupCount());
+    }
+
+    @Override
+    public Path toAbsolutePath() {
+       File file = new File(System.getProperty("user.home") + "/.m2/repository" + groupId);
+       return file.toPath();
+    }
+
+    // ------------------------------------------------------------------------
+    
     @Override
     public Path getRoot() {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -116,11 +172,6 @@ public class AcrArtifactFileSystemPath implements Path {
     }
 
     @Override
-    public Path toAbsolutePath() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public Path toRealPath(LinkOption... options) throws IOException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -134,5 +185,4 @@ public class AcrArtifactFileSystemPath implements Path {
     public int compareTo(Path other) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
 }

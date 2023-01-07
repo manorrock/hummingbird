@@ -24,115 +24,100 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.acr;
+package com.manorrock.hummingbird.maven;
 
 import java.io.IOException;
-import java.net.URI;
+import java.nio.file.FileStore;
 import java.nio.file.FileSystem;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
-import java.nio.file.WatchEvent;
-import java.nio.file.WatchKey;
+import java.nio.file.PathMatcher;
 import java.nio.file.WatchService;
+import java.nio.file.attribute.UserPrincipalLookupService;
+import java.nio.file.spi.FileSystemProvider;
+import java.util.Set;
 
 /**
- * An ACR artifact file-system path.
+ * A Maven repository file-system.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class AcrArtifactFileSystemPath implements Path {
+public class MavenRepositoryFileSystem extends FileSystem {
 
-    public AcrArtifactFileSystemPath(URI uri) {
-    }
-
-    @Override
-    public FileSystem getFileSystem() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public boolean isAbsolute() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Path getRoot() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Path getFileName() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Path getParent() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public int getNameCount() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Path getName(int index) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Path subpath(int beginIndex, int endIndex) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public boolean startsWith(Path other) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public boolean endsWith(Path other) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Path normalize() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Path resolve(Path other) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Path relativize(Path other) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public URI toUri() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Path toAbsolutePath() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Path toRealPath(LinkOption... options) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public WatchKey register(WatchService watcher, WatchEvent.Kind<?>[] events, WatchEvent.Modifier... modifiers) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public int compareTo(Path other) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    /**
+     * Stores the provider.
+     * 
+     * @return the provider.
+     */
+    private FileSystemProvider provider;
+    
+    /**
+     * Constructor.
+     * 
+     * @param provider the provider.
+     */
+    public MavenRepositoryFileSystem(FileSystemProvider provider) {
+        this.provider = provider;
     }
     
+    @Override
+    public FileSystemProvider provider() {
+        return provider;
+    }
+
+    // ------------------------------------------------------------------------
+    
+    @Override
+    public void close() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isOpen() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isReadOnly() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getSeparator() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Iterable<Path> getRootDirectories() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Iterable<FileStore> getFileStores() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Set<String> supportedFileAttributeViews() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Path getPath(String first, String... more) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public PathMatcher getPathMatcher(String syntaxAndPattern) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public UserPrincipalLookupService getUserPrincipalLookupService() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public WatchService newWatchService() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

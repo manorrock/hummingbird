@@ -24,28 +24,59 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.acr;
+package com.manorrock.hummingbird.maven;
 
+import java.io.InputStream;
 import java.net.URI;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Disabled;
+import java.util.HashMap;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 /**
- * The JUnit tests for the AcrArtifactFileSystemProvider class.
+ * The JUnit tests for the MavenRepositoryFileSystemProvider.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class AcrArtifactFileSystemProviderTest {
+public class MavenRepositoryFileSystemProviderTest {
+    
+    /**
+     * Test getFilesystem method.
+     * 
+     * @throws Exception when a serious error occurs.
+     */
+    @Test
+    public void testGetFilesystem() throws Exception {
+        MavenRepositoryFileSystemProvider provider = new MavenRepositoryFileSystemProvider();
+        assertNotNull(provider.getFileSystem(new URI("maven://local")));
+        assertTrue(provider.getFileSystem(new URI("maven://local")) instanceof MavenRepositoryFileSystem);
+    }
+    
+    /**
+     * Test getPath method.
+     * 
+     * @throws Exception when a serious error occurs.
+     */
+    @Test
+    public void testGetPath() throws Exception {
+//        MavenRepositoryFileSystemProvider provider = new MavenRepositoryFileSystemProvider();
+//        Path path = provider.getPath(new URI("maven://local/org.junit.jupiter/junit-jupiter-api/5.9.1/jar"));
+//        assertNotNull(path);
+//        assertTrue(path.isAbsolute());
+//        InputStream inputStream = Files.newInputStream(path);
+//        assertNotNull(inputStream);
+    }
     
     /**
      * Test getScheme method.
      */
     @Test
     public void testGetScheme() {
-        AcrArtifactFileSystemProvider provider = new AcrArtifactFileSystemProvider();
-        assertEquals("acr-artifact", provider.getScheme());
+        MavenRepositoryFileSystemProvider provider = new MavenRepositoryFileSystemProvider();
+        assertEquals("maven", provider.getScheme());
     }
     
     /**
@@ -54,33 +85,8 @@ public class AcrArtifactFileSystemProviderTest {
      * @throws Exception when a serious error occurs.
      */
     @Test
-    public void testNewFileSystem() throws Exception {
-        AcrArtifactFileSystemProvider provider = new AcrArtifactFileSystemProvider();
-        assertNotNull(provider.newFileSystem(new URI("acr-artifact://hostname"), null));
-    }
-    
-    /**
-     * Test getFileSystem method.
-     * 
-     * @throws Exception when a serious error occurs.
-     */
-    @Test
-    public void testGetFileSystem() throws Exception {
-        AcrArtifactFileSystemProvider provider = new AcrArtifactFileSystemProvider();
-        provider.newFileSystem(new URI("acr-artifact://hostname"), null);
-        assertNotNull(provider.getFileSystem(new URI("acr-artifact://hostname")));
-    }
-    
-    /**
-     * Test newFileChannel method.
-     * 
-     * @throws Exception when a serious error occurs.
-     */
-    @Disabled
-    @Test
-    public void testNewFileChannel() throws Exception {
-        AcrArtifactFileSystemProvider provider = new AcrArtifactFileSystemProvider();
-        assertNotNull(provider.newFileChannel(
-                Path.of(new URI("acr-artifact://hostname/file.txt")), null));
+    public void testNewFilesystem() throws Exception {
+        MavenRepositoryFileSystemProvider provider = new MavenRepositoryFileSystemProvider();
+        assertNotNull(provider.newFileSystem(new URI("maven://local"), new HashMap<>()));
     }
 }

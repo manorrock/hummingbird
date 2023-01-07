@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.manorrock.hummingbird</groupId>
     <artifactId>project</artifactId>
-    <version>22.3.0-SNAPSHOT</version>
+    <version>22.9.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Manorrock Hummingbird - Project</name>
     <description>
@@ -167,5 +167,6 @@
     </scm>
     <modules>
         <module>azure-container-registry</module>
+        <module>maven</module>
     </modules>
 </project>
