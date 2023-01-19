@@ -26,13 +26,11 @@
  */
 package com.manorrock.hummingbird.maven;
 
-import java.io.InputStream;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
@@ -42,6 +40,15 @@ import org.junit.jupiter.api.Test;
  * @author Manfred Riem (mriem@manorrock.com)
  */
 public class MavenRepositoryFileSystemProviderTest {
+    
+    /**
+     * Test createDirectory method.
+     */
+    @Test
+    void testCreateDirectory() {
+        MavenRepositoryFileSystemProvider provider = new MavenRepositoryFileSystemProvider();
+        assertThrows(UnsupportedOperationException.class, () -> {provider.createDirectory(null, null);});
+    }
     
     /**
      * Test getFilesystem method.
