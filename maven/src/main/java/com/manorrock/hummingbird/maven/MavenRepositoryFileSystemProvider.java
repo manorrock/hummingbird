@@ -51,6 +51,12 @@ import java.util.Set;
  * @author Manfred Riem (mriem@manorrock.com)
  */
 public class MavenRepositoryFileSystemProvider extends FileSystemProvider {
+    
+    @Override
+    public void createDirectory(Path dir, FileAttribute<?>... attrs) throws IOException {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
 
     @Override
     public FileSystem getFileSystem(URI uri) {
@@ -84,10 +90,6 @@ public class MavenRepositoryFileSystemProvider extends FileSystemProvider {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public void createDirectory(Path dir, FileAttribute<?>... attrs) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
     @Override
     public void delete(Path path) throws IOException {
