@@ -177,6 +177,5 @@
     </scm>
     <modules>
         <module>azure-container-registry</module>
-        <module>maven</module>
     </modules>
 </project>
