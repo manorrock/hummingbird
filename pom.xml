@@ -175,7 +175,5 @@
         <developerConnection>scm:git:git@github.com:manorrock/hummingbird.git</developerConnection>
         <url>https://github.com/manorrock/hummingbird</url>
     </scm>
-    <modules>
-        <module>azure-container-registry</module>
-    </modules>
+    <modules></modules>
 </project>
