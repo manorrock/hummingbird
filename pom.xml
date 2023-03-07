@@ -19,6 +19,9 @@
             <url>https://github.com/manorrock/hummingbird/blob/master/LICENSE</url>
         </license>
     </licenses>
+    <modules>
+        <module>azure-blob</module>
+    </modules>
     <build>
         <pluginManagement>
             <plugins>
