@@ -27,9 +27,9 @@
 package com.manorrock.hummingbird.api;
 
 /**
- * A file store directory.
+ * A repository file.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public interface FileStoreDirectory {
+public interface RepositoryFile {
 }

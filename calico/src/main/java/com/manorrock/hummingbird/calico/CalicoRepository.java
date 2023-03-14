@@ -25,27 +25,33 @@
  */
 package com.manorrock.hummingbird.calico;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import org.junit.jupiter.api.Test;
+import com.manorrock.hummingbird.api.Repository;
+import com.manorrock.hummingbird.api.RepositoryDirectory;
 
 /**
- * The JUnit tests for the CalicoFileSystemProvider class.
- * 
+ * The Manorrock Calico Repository implementation.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class CalicoFileSystemProviderTest {
+public class CalicoRepository implements Repository {
+
+    /**
+     * Stores the base URI.
+     */
+    private final URI baseUri;
     
     /**
-     * Test getScheme.
+     * Constructor.
+     * 
+     * @param baseUri the base URI.
      */
-    @Test
-    public void testGetScheme() throws IOException, URISyntaxException {
-        Path path = Path.of(new URI("calico://localhost:8080/calico/rest/README.txt"));
-        Files.copy(path, new ByteArrayOutputStream());
+    public CalicoRepository(URI baseUri) {
+        this.baseUri = baseUri;
+    }
+    
+    @Override
+    public RepositoryDirectory getRootDirectory() {
+        return new CalicoRepositoryDirectory(this);
     }
 }

@@ -27,9 +27,18 @@
 package com.manorrock.hummingbird.api;
 
 /**
- * A file store.
- * 
+ * A repository.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public interface FileStore {
+public interface Repository {
+
+    /**
+     * Get the root directory.
+     *
+     * @return the root directory.
+     * @throws UnsupportedOperationException if the implementation does not
+     * support this operation.
+     */
+    RepositoryDirectory getRootDirectory();
 }
