@@ -20,6 +20,7 @@
         </license>
     </licenses>
     <modules>
+        <module>api</module>
         <module>azure-blob</module>
     </modules>
     <build>
