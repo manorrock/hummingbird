@@ -24,6 +24,7 @@
         <module>calico</module>
         <module>file</module>
         <module>azure-blob</module>
+        <module>git</module>
     </modules>
     <build>
         <pluginManagement>
