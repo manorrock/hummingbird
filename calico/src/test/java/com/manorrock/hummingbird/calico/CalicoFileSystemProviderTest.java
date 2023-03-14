@@ -23,40 +23,29 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.file;
+package com.manorrock.hummingbird.calico;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URI;
-import com.manorrock.hummingbird.api.RepositoryFile;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import org.junit.jupiter.api.Test;
 
 /**
- * The File RepositoryFile implementation.
+ * The JUnit tests for the CalicoFileSystemProvider class.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class FileRepositoryFile implements RepositoryFile {
-
-    /**
-     * Stores the provider.
-     */
-    private FileRepository repository;
+public class CalicoFileSystemProviderTest {
     
     /**
-     * Stores the URI.
+     * Test getScheme.
      */
-    private URI uri;
-    
-    /**
-     * Constructor.
-     * 
-     * @param repository the file repository.
-     * @param uri the URI.
-     */
-    public FileRepositoryFile(FileRepository repository, URI uri) {
-        this.repository = repository;
-        this.uri = uri;
-    }
-    
-    @Override
-    public void setBytes(byte[] bytes) {
+    @Test
+    public void testGetScheme() throws IOException, URISyntaxException {
+        Path path = Path.of(new URI("calico://localhost:8080/calico/rest/README.txt"));
+        Files.copy(path, new ByteArrayOutputStream());
     }
 }
