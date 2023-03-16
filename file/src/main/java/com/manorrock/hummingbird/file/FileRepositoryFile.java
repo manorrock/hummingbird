@@ -55,8 +55,4 @@ public class FileRepositoryFile implements RepositoryFile {
         this.repository = repository;
         this.uri = uri;
     }
-    
-    @Override
-    public void setBytes(byte[] bytes) {
-    }
 }

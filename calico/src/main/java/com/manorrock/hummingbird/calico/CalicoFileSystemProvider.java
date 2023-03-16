@@ -81,7 +81,7 @@ public class CalicoFileSystemProvider extends FileSystemProvider {
 
         try {
             HttpResponse<InputStream> response = client.send(request, BodyHandlers.ofInputStream());
-            return Channels.newChannel(response.body());
+            return null;
             
         } catch (InterruptedException ex) {
             throw new IOException(ex);
