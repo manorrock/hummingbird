@@ -23,42 +23,46 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.calico;
+package com.manorrock.hummingbird.file;
 
-import java.net.URI;
+import com.manorrock.hummingbird.api.FileRepositoryFolder;
 import com.manorrock.hummingbird.api.FileRepositoryItem;
-import java.io.InputStream;
+import java.io.File;
+import java.util.List;
+import java.util.stream.Stream;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 /**
- * The Manorrock Calico FileRepositoryItem implementation.
+ * The JUnit tests for the DefaultFileRepositoryFolder class.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class CalicoRepositoryFile implements FileRepositoryItem {
-
-    /**
-     * Stores the provider.
-     */
-    private CalicoRepository repository;
+public class DefaultFileRepositoryFolderTest {
     
     /**
-     * Stores the URI.
+     * Test getItems method.
      */
-    private URI uri;
-    
-    /**
-     * Constructor.
-     * 
-     * @param repository the file repository.
-     * @param uri the URI.
-     */
-    public CalicoRepositoryFile(CalicoRepository repository, URI uri) {
-        this.repository = repository;
-        this.uri = uri;
+    @Test
+    public void testGetItems() {
+        DefaultFileRepository repository = new DefaultFileRepository(new File("."));
+        FileRepositoryFolder folder = repository.getRootFolder();
+        List<FileRepositoryItem> items = folder.getItems();
+        assertNotNull(items);
+        assertFalse(items.isEmpty());
     }
-
-    @Override
-    public InputStream asInputStream() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    
+    /**
+     * Test items method.
+     */
+    @Test
+    public void testItems() {
+        DefaultFileRepository repository = new DefaultFileRepository(new File("."));
+        FileRepositoryFolder folder = repository.getRootFolder();
+        Stream<FileRepositoryItem> items = folder.items();
+        assertNotNull(items);
+        assertTrue(items.count() > 0);
     }
 }

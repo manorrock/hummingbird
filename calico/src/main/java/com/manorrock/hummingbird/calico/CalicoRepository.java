@@ -26,15 +26,15 @@
 package com.manorrock.hummingbird.calico;
 
 import java.net.URI;
-import com.manorrock.hummingbird.api.Repository;
-import com.manorrock.hummingbird.api.RepositoryDirectory;
+import com.manorrock.hummingbird.api.FileRepository;
+import com.manorrock.hummingbird.api.FileRepositoryFolder;
 
 /**
- * The Manorrock Calico Repository implementation.
+ * The Manorrock Calico FileRepository implementation.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class CalicoRepository implements Repository {
+public class CalicoRepository implements FileRepository {
 
     /**
      * Stores the base URI.
@@ -51,7 +51,7 @@ public class CalicoRepository implements Repository {
     }
     
     @Override
-    public RepositoryDirectory getRootDirectory() {
+    public FileRepositoryFolder getRootFolder() {
         return new CalicoRepositoryDirectory(this);
     }
 }

@@ -37,11 +37,11 @@ import org.junit.jupiter.api.Test;
 class CalicoRepositoryTest {
     
     /**
-     * Test getRootDirectory.
+     * Test getRootFolder.
      */
     @Test
     void testGetRootDirectory() {
         CalicoRepository repository = new CalicoRepository(URI.create("http://localhost:8080/"));
-        assertNotNull(repository.getRootDirectory());
+        assertNotNull(repository.getRootFolder());
     }
 }

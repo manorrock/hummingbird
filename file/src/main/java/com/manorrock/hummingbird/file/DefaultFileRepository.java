@@ -25,34 +25,44 @@
  */
 package com.manorrock.hummingbird.file;
 
+import com.manorrock.hummingbird.api.FileRepository;
+import com.manorrock.hummingbird.api.FileRepositoryFolder;
+import java.io.File;
 import java.net.URI;
-import com.manorrock.hummingbird.api.RepositoryFile;
+import java.nio.file.Path;
 
 /**
- * The File RepositoryFile implementation.
- * 
+ * The default FileRepository implementation.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class FileRepositoryFile implements RepositoryFile {
+public class DefaultFileRepository implements FileRepository {
 
     /**
-     * Stores the provider.
+     * Stores the root directory.
      */
-    private FileRepository repository;
-    
-    /**
-     * Stores the URI.
-     */
-    private URI uri;
+    private final File rootDirectory;
     
     /**
      * Constructor.
      * 
-     * @param repository the file repository.
-     * @param uri the URI.
+     * @param rootDirectory the root directory.
      */
-    public FileRepositoryFile(FileRepository repository, URI uri) {
-        this.repository = repository;
-        this.uri = uri;
+    public DefaultFileRepository(File rootDirectory) {
+        this.rootDirectory = rootDirectory;
+    }
+    
+    /**
+     * Constructor.
+     * 
+     * @param rootUri the root directory as specified by the given URI.
+     */
+    public DefaultFileRepository(URI rootUri) {
+        this.rootDirectory = Path.of(rootUri).toFile();
+    }
+    
+    @Override
+    public FileRepositoryFolder getRootFolder() {
+        return new DefaultFileRepositoryFolder(this, rootDirectory);
     }
 }

@@ -25,32 +25,25 @@
  */
 package com.manorrock.hummingbird.file;
 
-import com.manorrock.hummingbird.api.RepositoryDirectory;
+import com.manorrock.hummingbird.api.FileRepositoryFolder;
+import java.io.File;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
 
 /**
- * The Manorrock Calico RepositoryDirectory implementation.
- *
+ * The JUnit tests for the DefaultFileRepositoryItem class.
+ * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class FileRepositoryDirectory implements RepositoryDirectory {
-
-    /**
-     * Stores the repository.
-     */
-    private final FileRepository repository;
+public class DefaultFileRepositoryItemTest {
     
     /**
-     * Stores the path.
+     * Test asInputStream method.
      */
-    private final String path;
-
-    /**
-     * Constructor.
-     *
-     * @param repository the repository.
-     */
-    public FileRepositoryDirectory(FileRepository repository) {
-        this.path = "";
-        this.repository = repository;
+    @Test
+    public void testAsInputStream() {
+        DefaultFileRepository repository = new DefaultFileRepository(new File("."));
+        FileRepositoryFolder folder = repository.getRootFolder();
+        assertNotNull(folder.getItem("pom.xml").asInputStream());
     }
 }
