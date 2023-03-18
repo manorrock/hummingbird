@@ -27,7 +27,6 @@ package com.manorrock.hummingbird.calico;
 
 import com.manorrock.hummingbird.api.FileRepositoryFolder;
 import com.manorrock.hummingbird.api.FileRepositoryItem;
-import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -56,6 +55,11 @@ public class CalicoRepositoryDirectory implements FileRepositoryFolder {
     public CalicoRepositoryDirectory(CalicoRepository repository) {
         this.path = "";
         this.repository = repository;
+    }
+
+    @Override
+    public FileRepositoryItem getItem(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
