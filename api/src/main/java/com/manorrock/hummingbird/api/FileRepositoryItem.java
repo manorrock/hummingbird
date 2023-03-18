@@ -26,10 +26,19 @@
  */
 package com.manorrock.hummingbird.api;
 
+import java.io.InputStream;
+
 /**
- * A file store.
+ * A file repository item.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public interface FileStore {
+public interface FileRepositoryItem {
+    
+    /**
+     * As an input stream.
+     * 
+     * @return an input stream.
+     */
+    InputStream asInputStream();
 }

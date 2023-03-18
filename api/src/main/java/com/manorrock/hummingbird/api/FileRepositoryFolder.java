@@ -26,19 +26,35 @@
  */
 package com.manorrock.hummingbird.api;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 /**
- * A repository.
+ * A file repository folder.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public interface Repository {
+public interface FileRepositoryFolder {
+    
+    /**
+     * Get the item specified by the relative name.
+     * 
+     * @param name the name.
+     * @return the item if found, null otherwise.
+     */
+    public FileRepositoryItem getItem(String name);
 
     /**
-     * Get the root directory.
-     *
-     * @return the root directory.
-     * @throws UnsupportedOperationException if the implementation does not
-     * support this operation.
+     * Get the items in this folder excluding any folders.
+     * 
+     * @return the items in this folder.
      */
-    RepositoryDirectory getRootDirectory();
+    List<FileRepositoryItem> getItems();
+    
+    /**
+     * Get the items in this folder excluding any folders.
+     * 
+     * @return the items in this folder.
+     */
+    Stream<FileRepositoryItem> items();
 }

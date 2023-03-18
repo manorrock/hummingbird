@@ -25,33 +25,32 @@
  */
 package com.manorrock.hummingbird.file;
 
-import java.net.URI;
-import com.manorrock.hummingbird.api.Repository;
-import com.manorrock.hummingbird.api.RepositoryDirectory;
+import java.io.File;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
 
 /**
- * The File Repository implementation.
- *
+ * The JUnit tests for the DefaultFileRepository class.
+ * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class FileRepository implements Repository {
-
-    /**
-     * Stores the base URI.
-     */
-    private final URI baseUri;
+public class DefaultFileRepositoryTest {
     
     /**
-     * Constructor.
-     * 
-     * @param baseUri the base URI.
+     * Test getRootFolder method.
      */
-    public FileRepository(URI baseUri) {
-        this.baseUri = baseUri;
+    @Test
+    public void testGetRootFolder() {
+        DefaultFileRepository repository = new DefaultFileRepository(new File("."));
+        assertNotNull(repository.getRootFolder());
     }
     
-    @Override
-    public RepositoryDirectory getRootDirectory() {
-        return new FileRepositoryDirectory(this);
+    /**
+     * Test getRootFolder method.
+     */
+    @Test
+    public void testGetRootFolder2() {
+        DefaultFileRepository repository = new DefaultFileRepository(new File(".").toURI());
+        assertNotNull(repository.getRootFolder());
     }
 }

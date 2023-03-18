@@ -23,48 +23,81 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.calico;
+package com.manorrock.hummingbird.file;
 
 import com.manorrock.hummingbird.api.FileRepositoryFolder;
 import com.manorrock.hummingbird.api.FileRepositoryItem;
-import java.io.InputStream;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * The Manorrock Calico FileRepositoryFolder implementation.
+ * The default FileRepositoryFolder implementation.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class CalicoRepositoryDirectory implements FileRepositoryFolder {
+public class DefaultFileRepositoryFolder implements FileRepositoryFolder {
+
+    /**
+     * Stores the folder.
+     */
+    private final File directory;
 
     /**
      * Stores the repository.
      */
-    private final CalicoRepository repository;
-    
-    /**
-     * Stores the path.
-     */
-    private final String path;
+    private final DefaultFileRepository repository;
 
     /**
      * Constructor.
      *
      * @param repository the repository.
+     * @param directory the directory.
      */
-    public CalicoRepositoryDirectory(CalicoRepository repository) {
-        this.path = "";
+    public DefaultFileRepositoryFolder(DefaultFileRepository repository, File directory) {
+        this.directory = directory;
         this.repository = repository;
     }
 
     @Override
+    public FileRepositoryItem getItem(String name) {
+        FileRepositoryItem result = null;
+        File[] files = directory.listFiles(
+                new FilenameFilter() {
+            @Override
+            public boolean accept(File acceptDirectory, String acceptName) {
+                boolean result = false;
+                if (acceptName.equals(name)) {
+                    result = true;
+                }
+                return result;
+            }
+        });
+        if (files.length > 0) {
+            result = new DefaultFileRepositoryItem(repository, files[0]);
+        }
+        return result;
+    }
+
+    @Override
     public List<FileRepositoryItem> getItems() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ArrayList<FileRepositoryItem> result = new ArrayList<>();
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (!file.isDirectory()) {
+                    DefaultFileRepositoryItem item = new DefaultFileRepositoryItem(repository, file);
+                    result.add(item);
+                }
+            }
+        }
+        return result;
     }
 
     @Override
     public Stream<FileRepositoryItem> items() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return getItems().stream();
     }
 }
