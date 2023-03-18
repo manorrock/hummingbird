@@ -27,6 +27,7 @@ package com.manorrock.hummingbird.calico;
 
 import com.manorrock.hummingbird.api.FileRepositoryFolder;
 import com.manorrock.hummingbird.api.FileRepositoryItem;
+import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Stream;
 
