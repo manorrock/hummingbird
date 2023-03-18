@@ -59,6 +59,11 @@ public class CalicoRepositoryDirectory implements FileRepositoryFolder {
     }
 
     @Override
+    public FileRepositoryItem getItem(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
+    @Override
     public List<FileRepositoryItem> getItems() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
