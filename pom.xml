@@ -26,6 +26,7 @@
         <module>azure-blob</module>
         <module>git</module>
         <module>maven</module>
+        <module>path</module>
     </modules>
     <build>
         <pluginManagement>
