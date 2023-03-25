@@ -26,19 +26,17 @@
  */
 package com.manorrock.hummingbird.api;
 
-import java.io.InputStream;
-
 /**
- * A file repository item.
- * 
+ * A virtual file system.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public interface FileRepositoryItem {
-    
+public interface VirtualFileSystem {
+
     /**
-     * As an input stream.
-     * 
-     * @return an input stream.
+     * Get the root folder.
+     *
+     * @return the root folder.
      */
-    InputStream asInputStream();
+    VirtualFileFolder getRootFolder();
 }

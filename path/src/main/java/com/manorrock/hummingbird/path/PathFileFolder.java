@@ -25,10 +25,6 @@
  */
 package com.manorrock.hummingbird.path;
 
-import com.manorrock.hummingbird.api.FileRepositoryFolder;
-import com.manorrock.hummingbird.api.FileRepositoryItem;
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,13 +32,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+import com.manorrock.hummingbird.api.VirtualFile;
+import com.manorrock.hummingbird.api.VirtualFileFolder;
 
 /**
- * The Path FileRepositoryFolder implementation.
+ * The Path VirtualFileFolder implementation.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class PathFileRepositoryFolder implements FileRepositoryFolder {
+public class PathFileFolder implements VirtualFileFolder {
 
     /**
      * Stores the path.
@@ -50,24 +48,24 @@ public class PathFileRepositoryFolder implements FileRepositoryFolder {
     private final Path folder;
 
     /**
-     * Stores the repository.
+     * Stores the file system.
      */
-    private final PathFileRepository repository;
+    private final PathFileSystem fileSystem;
 
     /**
      * Constructor.
      *
-     * @param repository the repository.
+     * @param fileSystem the file system.
      * @param folder the folder.
      */
-    public PathFileRepositoryFolder(PathFileRepository repository, Path folder) {
+    public PathFileFolder(PathFileSystem fileSystem, Path folder) {
         this.folder = folder;
-        this.repository = repository;
+        this.fileSystem = fileSystem;
     }
 
     @Override
-    public FileRepositoryItem getItem(String name) {
-        FileRepositoryItem result = null;
+    public VirtualFile getFile(String name) {
+        VirtualFile result = null;
         if (Files.isDirectory(folder)) {
             Optional<Path> file = null;
             try {
@@ -80,21 +78,21 @@ public class PathFileRepositoryFolder implements FileRepositoryFolder {
                 // swallow up on purpose.
             }
             if (file != null && file.isPresent()) {
-                result = new PathFileRepositoryItem(repository, file.get());
+                result = new PathFile(fileSystem, file.get());
             }
         }
         return result;
     }
 
     @Override
-    public List<FileRepositoryItem> getItems() {
-        ArrayList<FileRepositoryItem> result = new ArrayList<>();
+    public List<VirtualFile> getFiles() {
+        ArrayList<VirtualFile> result = new ArrayList<>();
         if (Files.isDirectory(folder)) {
             try {
                 Files.walk(folder, 1)
                         .forEach(p -> {
                             if (!Files.isDirectory(p)) {
-                                PathFileRepositoryItem item = new PathFileRepositoryItem(repository, p);
+                                PathFile item = new PathFile(fileSystem, p);
                                 result.add(item);
                             }
                         });
@@ -106,7 +104,7 @@ public class PathFileRepositoryFolder implements FileRepositoryFolder {
     }
 
     @Override
-    public Stream<FileRepositoryItem> items() {
-        return getItems().stream();
+    public Stream<VirtualFile> files() {
+        return getFiles().stream();
     }
 }

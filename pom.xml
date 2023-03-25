@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
     <name>Manorrock Hummingbird - Project</name>
     <description>
-        Manorrock Hummingbird delivers you with our filesystem providers.
+        Manorrock Hummingbird delivers you with our VirtualFileSystem implementations.
     </description>
     <url>https://github.com/manorrock/hummingbird</url>
     <licenses>

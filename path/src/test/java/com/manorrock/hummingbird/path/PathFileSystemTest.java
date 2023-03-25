@@ -23,25 +23,34 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.calico;
+package com.manorrock.hummingbird.path;
 
-import java.net.URI;
+import java.io.File;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
 /**
- * The JUnit tests for the CalicoFileRepository class.
+ * The JUnit tests for the PathFileSystem class.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-class CalicoRepositoryTest {
+public class PathFileSystemTest {
     
     /**
-     * Test getRootFolder.
+     * Test getRootFolder method.
      */
     @Test
-    void testGetRootDirectory() {
-        CalicoRepository repository = new CalicoRepository(URI.create("http://localhost:8080/"));
-        assertNotNull(repository.getRootFolder());
+    public void testGetRootFolder() {
+        PathFileSystem fileSystem = new PathFileSystem(new File(".").toPath());
+        assertNotNull(fileSystem.getRootFolder());
+    }
+    
+    /**
+     * Test getRootFolder method.
+     */
+    @Test
+    public void testGetRootFolder2() {
+        PathFileSystem fileSystem = new PathFileSystem(new File(".").toURI());
+        assertNotNull(fileSystem.getRootFolder());
     }
 }

@@ -25,95 +25,33 @@
  */
 package com.manorrock.hummingbird.calico;
 
-import java.io.IOException;
-import java.nio.file.FileStore;
-import java.nio.file.FileSystem;
-import java.nio.file.Path;
-import java.nio.file.PathMatcher;
-import java.nio.file.WatchService;
-import java.nio.file.attribute.UserPrincipalLookupService;
-import java.nio.file.spi.FileSystemProvider;
-import java.util.Set;
+import java.net.URI;
+import com.manorrock.hummingbird.api.VirtualFileFolder;
+import com.manorrock.hummingbird.api.VirtualFileSystem;
 
 /**
- * The FileSystem implementation for Manorrock Calico.
- * 
+ * The Manorrock Calico VirtualFileSystem implementation.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class CalicoFileSystem extends FileSystem {
+public class CalicoFileSystem implements VirtualFileSystem {
 
     /**
-     * Stores the provider.
+     * Stores the base URI.
      */
-    private CalicoFileSystemProvider provider;
+    private final URI baseUri;
     
     /**
      * Constructor.
      * 
-     * @param provider the provider.
+     * @param baseUri the base URI.
      */
-    public CalicoFileSystem(CalicoFileSystemProvider provider) {
-        this.provider = provider;
-    }
-
-    @Override
-    public FileSystemProvider provider() {
-        return provider;
-    }
-
-    @Override
-    public void close() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public boolean isOpen() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public boolean isReadOnly() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public String getSeparator() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Iterable<Path> getRootDirectories() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Iterable<FileStore> getFileStores() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Set<String> supportedFileAttributeViews() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Path getPath(String first, String... more) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public PathMatcher getPathMatcher(String syntaxAndPattern) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public UserPrincipalLookupService getUserPrincipalLookupService() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public WatchService newWatchService() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public CalicoFileSystem(URI baseUri) {
+        this.baseUri = baseUri;
     }
     
+    @Override
+    public VirtualFileFolder getRootFolder() {
+        return new CalicoFileFolder(this);
+    }
 }

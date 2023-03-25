@@ -23,34 +23,46 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.file;
+package com.manorrock.hummingbird.path;
 
+import com.manorrock.hummingbird.api.VirtualFile;
+import com.manorrock.hummingbird.api.VirtualFileFolder;
 import java.io.File;
+import java.util.List;
+import java.util.stream.Stream;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 /**
- * The JUnit tests for the DefaultFileRepository class.
+ * The JUnit tests for the PathFileFolder class.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class DefaultFileRepositoryTest {
+public class PathFileFolderTest {
     
     /**
-     * Test getRootFolder method.
+     * Test getFiles method.
      */
     @Test
-    public void testGetRootFolder() {
-        DefaultFileRepository repository = new DefaultFileRepository(new File("."));
-        assertNotNull(repository.getRootFolder());
+    public void testGetFiles() {
+        PathFileSystem fileSystem = new PathFileSystem(new File(".").toPath());
+        VirtualFileFolder folder = fileSystem.getRootFolder();
+        List<VirtualFile> files = folder.getFiles();
+        assertNotNull(files);
+        assertFalse(files.isEmpty());
     }
     
     /**
-     * Test getRootFolder method.
+     * Test files method.
      */
     @Test
-    public void testGetRootFolder2() {
-        DefaultFileRepository repository = new DefaultFileRepository(new File(".").toURI());
-        assertNotNull(repository.getRootFolder());
+    public void testFiles() {
+        PathFileSystem fileSystem = new PathFileSystem(new File(".").toPath());
+        VirtualFileFolder folder = fileSystem.getRootFolder();
+        Stream<VirtualFile> files = folder.files();
+        assertNotNull(files);
+        assertTrue(files.count() > 0);
     }
 }

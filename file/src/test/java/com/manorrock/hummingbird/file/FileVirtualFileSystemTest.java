@@ -23,26 +23,26 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.path;
+package com.manorrock.hummingbird.file;
 
 import java.io.File;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
 /**
- * The JUnit tests for the DefaultFileRepository class.
+ * The JUnit tests for the FileVirtualFileSystem class.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class PathFileRepositoryTest {
+public class FileVirtualFileSystemTest {
     
     /**
      * Test getRootFolder method.
      */
     @Test
     public void testGetRootFolder() {
-        PathFileRepository repository = new PathFileRepository(new File(".").toPath());
-        assertNotNull(repository.getRootFolder());
+        FileVirtualFileSystem fileSystem = new FileVirtualFileSystem(new File("."));
+        assertNotNull(fileSystem.getRootFolder());
     }
     
     /**
@@ -50,7 +50,7 @@ public class PathFileRepositoryTest {
      */
     @Test
     public void testGetRootFolder2() {
-        PathFileRepository repository = new PathFileRepository(new File(".").toURI());
-        assertNotNull(repository.getRootFolder());
+        FileVirtualFileSystem fileSystem = new FileVirtualFileSystem(new File(".").toURI());
+        assertNotNull(fileSystem.getRootFolder());
     }
 }

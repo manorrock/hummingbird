@@ -25,20 +25,20 @@
  */
 package com.manorrock.hummingbird.file;
 
-import com.manorrock.hummingbird.api.FileRepositoryFolder;
-import com.manorrock.hummingbird.api.FileRepositoryItem;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
+import com.manorrock.hummingbird.api.VirtualFile;
+import com.manorrock.hummingbird.api.VirtualFileFolder;
 
 /**
- * The default FileRepositoryFolder implementation.
+ * The File VirtualFileFolder implementation.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class DefaultFileRepositoryFolder implements FileRepositoryFolder {
+public class FileVirtualFileFolder implements VirtualFileFolder {
 
     /**
      * Stores the folder.
@@ -46,24 +46,24 @@ public class DefaultFileRepositoryFolder implements FileRepositoryFolder {
     private final File directory;
 
     /**
-     * Stores the repository.
+     * Stores the file system.
      */
-    private final DefaultFileRepository repository;
+    private final FileVirtualFileSystem fileSystem;
 
     /**
      * Constructor.
      *
-     * @param repository the repository.
+     * @param fileSystem the file system.
      * @param directory the directory.
      */
-    public DefaultFileRepositoryFolder(DefaultFileRepository repository, File directory) {
+    public FileVirtualFileFolder(FileVirtualFileSystem fileSystem, File directory) {
         this.directory = directory;
-        this.repository = repository;
+        this.fileSystem = fileSystem;
     }
 
     @Override
-    public FileRepositoryItem getItem(String name) {
-        FileRepositoryItem result = null;
+    public VirtualFile getFile(String name) {
+        VirtualFile result = null;
         File[] files = directory.listFiles(
                 new FilenameFilter() {
             @Override
@@ -76,19 +76,19 @@ public class DefaultFileRepositoryFolder implements FileRepositoryFolder {
             }
         });
         if (files.length > 0) {
-            result = new DefaultFileRepositoryItem(repository, files[0]);
+            result = new FileVirtualFile(fileSystem, files[0]);
         }
         return result;
     }
 
     @Override
-    public List<FileRepositoryItem> getItems() {
-        ArrayList<FileRepositoryItem> result = new ArrayList<>();
+    public List<VirtualFile> getFiles() {
+        ArrayList<VirtualFile> result = new ArrayList<>();
         File[] files = directory.listFiles();
         if (files != null) {
             for (File file : files) {
                 if (!file.isDirectory()) {
-                    DefaultFileRepositoryItem item = new DefaultFileRepositoryItem(repository, file);
+                    FileVirtualFile item = new FileVirtualFile(fileSystem, file);
                     result.add(item);
                 }
             }
@@ -97,7 +97,7 @@ public class DefaultFileRepositoryFolder implements FileRepositoryFolder {
     }
 
     @Override
-    public Stream<FileRepositoryItem> items() {
-        return getItems().stream();
+    public Stream<VirtualFile> files() {
+        return getFiles().stream();
     }
 }

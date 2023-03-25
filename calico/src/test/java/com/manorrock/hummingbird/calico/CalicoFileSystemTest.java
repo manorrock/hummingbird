@@ -23,55 +23,25 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.file;
+package com.manorrock.hummingbird.calico;
 
-import com.manorrock.hummingbird.api.FileRepositoryItem;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.net.URI;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
 
 /**
- * The default FileRepositoryItem implementation.
+ * The JUnit tests for the CalicoFileSystem class.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class DefaultFileRepositoryItem implements FileRepositoryItem {
-
-    /**
-     * Stores the file.
-     */
-    private File file;
-
-    /**
-     * Stores the provider.
-     */
-    private DefaultFileRepository repository;
+class CalicoFileSystemTest {
     
     /**
-     * Constructor.
-     * 
-     * @param repository the file repository.
-     * @param file the file.
+     * Test getRootFolder.
      */
-    public DefaultFileRepositoryItem(DefaultFileRepository repository, File file) {
-        this.file = file;
-        this.repository = repository;
-    }
-    
-    /**
-     * As an input stream.
-     * 
-     * @return an input stream, or null if not found.
-     */
-    @Override
-    public InputStream asInputStream() {
-        InputStream result = null;
-        try {
-            result = new FileInputStream(file);
-        } catch (FileNotFoundException ex) {
-            // swallowed up on purpose.
-        }
-        return result;
+    @Test
+    void testGetRootDirectory() {
+        CalicoFileSystem fileSystem = new CalicoFileSystem(URI.create("http://localhost:8080/"));
+        assertNotNull(fileSystem.getRootFolder());
     }
 }

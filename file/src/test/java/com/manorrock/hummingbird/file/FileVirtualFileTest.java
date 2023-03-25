@@ -25,44 +25,25 @@
  */
 package com.manorrock.hummingbird.file;
 
-import com.manorrock.hummingbird.api.FileRepositoryFolder;
-import com.manorrock.hummingbird.api.FileRepositoryItem;
 import java.io.File;
-import java.util.List;
-import java.util.stream.Stream;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+import com.manorrock.hummingbird.api.VirtualFileFolder;
 
 /**
- * The JUnit tests for the DefaultFileRepositoryFolder class.
+ * The JUnit tests for the FileVirtualFile class.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class DefaultFileRepositoryFolderTest {
+public class FileVirtualFileTest {
     
     /**
-     * Test getItems method.
+     * Test asInputStream method.
      */
     @Test
-    public void testGetItems() {
-        DefaultFileRepository repository = new DefaultFileRepository(new File("."));
-        FileRepositoryFolder folder = repository.getRootFolder();
-        List<FileRepositoryItem> items = folder.getItems();
-        assertNotNull(items);
-        assertFalse(items.isEmpty());
-    }
-    
-    /**
-     * Test items method.
-     */
-    @Test
-    public void testItems() {
-        DefaultFileRepository repository = new DefaultFileRepository(new File("."));
-        FileRepositoryFolder folder = repository.getRootFolder();
-        Stream<FileRepositoryItem> items = folder.items();
-        assertNotNull(items);
-        assertTrue(items.count() > 0);
+    public void testAsInputStream() {
+        FileVirtualFileSystem fileSystem = new FileVirtualFileSystem(new File("."));
+        VirtualFileFolder folder = fileSystem.getRootFolder();
+        assertNotNull(folder.getFile("pom.xml").asInputStream());
     }
 }

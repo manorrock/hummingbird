@@ -23,27 +23,52 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.file;
+package com.manorrock.hummingbird.calico;
 
-import com.manorrock.hummingbird.api.FileRepositoryFolder;
-import java.io.File;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import org.junit.jupiter.api.Test;
+import com.manorrock.hummingbird.api.VirtualFile;
+import com.manorrock.hummingbird.api.VirtualFileFolder;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
- * The JUnit tests for the DefaultFileRepositoryItem class.
- * 
+ * The Manorrock Calico VirtualFileFolder implementation.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class DefaultFileRepositoryItemTest {
+public class CalicoFileFolder implements VirtualFileFolder {
+
+    /**
+     * Stores the file system.
+     */
+    private final CalicoFileSystem fileSystem;
     
     /**
-     * Test asInputStream method.
+     * Stores the path.
      */
-    @Test
-    public void testAsInputStream() {
-        DefaultFileRepository repository = new DefaultFileRepository(new File("."));
-        FileRepositoryFolder folder = repository.getRootFolder();
-        assertNotNull(folder.getItem("pom.xml").asInputStream());
+    private final String path;
+
+    /**
+     * Constructor.
+     *
+     * @param fileSystem the file system.
+     */
+    public CalicoFileFolder(CalicoFileSystem fileSystem) {
+        this.path = "";
+        this.fileSystem = fileSystem;
+    }
+
+    @Override
+    public VirtualFile getFile(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
+    @Override
+    public List<VirtualFile> getFiles() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Stream<VirtualFile> files() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -23,35 +23,55 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.calico;
+package com.manorrock.hummingbird.file;
 
-import java.net.URI;
-import com.manorrock.hummingbird.api.FileRepository;
-import com.manorrock.hummingbird.api.FileRepositoryFolder;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import com.manorrock.hummingbird.api.VirtualFile;
 
 /**
- * The Manorrock Calico FileRepository implementation.
- *
+ * The File VirtualFile implementation.
+ * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class CalicoRepository implements FileRepository {
+public class FileVirtualFile implements VirtualFile {
 
     /**
-     * Stores the base URI.
+     * Stores the file.
      */
-    private final URI baseUri;
+    private File file;
+
+    /**
+     * Stores the file system.
+     */
+    private FileVirtualFileSystem fileSystem;
     
     /**
      * Constructor.
      * 
-     * @param baseUri the base URI.
+     * @param fileSystem the file systemy.
+     * @param file the file.
      */
-    public CalicoRepository(URI baseUri) {
-        this.baseUri = baseUri;
+    public FileVirtualFile(FileVirtualFileSystem fileSystem, File file) {
+        this.file = file;
+        this.fileSystem = fileSystem;
     }
     
+    /**
+     * As an input stream.
+     * 
+     * @return an input stream, or null if not found.
+     */
     @Override
-    public FileRepositoryFolder getRootFolder() {
-        return new CalicoRepositoryDirectory(this);
+    public InputStream asInputStream() {
+        InputStream result = null;
+        try {
+            result = new FileInputStream(file);
+        } catch (FileNotFoundException ex) {
+            // swallowed up on purpose.
+        }
+        return result;
     }
 }

@@ -25,51 +25,40 @@
  */
 package com.manorrock.hummingbird.calico;
 
-import com.manorrock.hummingbird.api.FileRepositoryFolder;
-import com.manorrock.hummingbird.api.FileRepositoryItem;
+import java.net.URI;
 import java.io.InputStream;
-import java.util.List;
-import java.util.stream.Stream;
+import com.manorrock.hummingbird.api.VirtualFile;
 
 /**
- * The Manorrock Calico FileRepositoryFolder implementation.
- *
+ * The Manorrock Calico VirtualFile implementation.
+ * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class CalicoRepositoryDirectory implements FileRepositoryFolder {
+public class CalicoFile implements VirtualFile {
 
     /**
-     * Stores the repository.
+     * Stores the file system.
      */
-    private final CalicoRepository repository;
+    private CalicoFileSystem fileSystem;
     
     /**
-     * Stores the path.
+     * Stores the URI.
      */
-    private final String path;
-
+    private URI uri;
+    
     /**
      * Constructor.
-     *
-     * @param repository the repository.
+     * 
+     * @param fileSsytem the file system.
+     * @param uri the URI.
      */
-    public CalicoRepositoryDirectory(CalicoRepository repository) {
-        this.path = "";
-        this.repository = repository;
+    public CalicoFile(CalicoFileSystem fileSsytem, URI uri) {
+        this.fileSystem = fileSsytem;
+        this.uri = uri;
     }
 
     @Override
-    public FileRepositoryItem getItem(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
-
-    @Override
-    public List<FileRepositoryItem> getItems() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Stream<FileRepositoryItem> items() {
+    public InputStream asInputStream() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

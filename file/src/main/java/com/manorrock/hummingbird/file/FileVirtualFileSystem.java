@@ -23,27 +23,46 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.path;
+package com.manorrock.hummingbird.file;
 
-import com.manorrock.hummingbird.api.FileRepositoryFolder;
 import java.io.File;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import org.junit.jupiter.api.Test;
+import java.net.URI;
+import java.nio.file.Path;
+import com.manorrock.hummingbird.api.VirtualFileFolder;
+import com.manorrock.hummingbird.api.VirtualFileSystem;
 
 /**
- * The JUnit tests for the DefaultFileRepositoryItem class.
- * 
+ * The File VirtualFileSystem implementation.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class PathFileRepositoryItemTest {
+public class FileVirtualFileSystem implements VirtualFileSystem {
+
+    /**
+     * Stores the root directory.
+     */
+    private final File rootDirectory;
     
     /**
-     * Test asInputStream method.
+     * Constructor.
+     * 
+     * @param rootDirectory the root directory.
      */
-    @Test
-    public void testAsInputStream() {
-        PathFileRepository repository = new PathFileRepository(new File(".").toPath());
-        FileRepositoryFolder folder = repository.getRootFolder();
-        assertNotNull(folder.getItem("pom.xml").asInputStream());
+    public FileVirtualFileSystem(File rootDirectory) {
+        this.rootDirectory = rootDirectory;
+    }
+    
+    /**
+     * Constructor.
+     * 
+     * @param rootUri the root directory as specified by the given URI.
+     */
+    public FileVirtualFileSystem(URI rootUri) {
+        this.rootDirectory = Path.of(rootUri).toFile();
+    }
+    
+    @Override
+    public VirtualFileFolder getRootFolder() {
+        return new FileVirtualFileFolder(this, rootDirectory);
     }
 }
