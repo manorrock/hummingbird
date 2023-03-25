@@ -23,46 +23,27 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.file;
+package com.manorrock.hummingbird.path;
 
-import com.manorrock.hummingbird.api.FileRepository;
-import com.manorrock.hummingbird.api.FileRepositoryFolder;
+import com.manorrock.hummingbird.api.VirtualFileFolder;
 import java.io.File;
-import java.net.URI;
-import java.nio.file.Path;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
 
 /**
- * The default FileRepository implementation.
- *
+ * The JUnit tests for the PathFile class.
+ * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class DefaultFileRepository implements FileRepository {
-
-    /**
-     * Stores the root directory.
-     */
-    private final File rootDirectory;
+public class PathFileTest {
     
     /**
-     * Constructor.
-     * 
-     * @param rootDirectory the root directory.
+     * Test asInputStream method.
      */
-    public DefaultFileRepository(File rootDirectory) {
-        this.rootDirectory = rootDirectory;
-    }
-    
-    /**
-     * Constructor.
-     * 
-     * @param rootUri the root directory as specified by the given URI.
-     */
-    public DefaultFileRepository(URI rootUri) {
-        this.rootDirectory = Path.of(rootUri).toFile();
-    }
-    
-    @Override
-    public FileRepositoryFolder getRootFolder() {
-        return new DefaultFileRepositoryFolder(this, rootDirectory);
+    @Test
+    public void testAsInputStream() {
+        PathFileSystem fileSystem = new PathFileSystem(new File(".").toPath());
+        VirtualFileFolder folder = fileSystem.getRootFolder();
+        assertNotNull(folder.getFile("pom.xml").asInputStream());
     }
 }

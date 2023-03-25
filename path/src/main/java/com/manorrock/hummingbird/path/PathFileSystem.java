@@ -25,44 +25,43 @@
  */
 package com.manorrock.hummingbird.path;
 
-import com.manorrock.hummingbird.api.FileRepositoryFolder;
-import com.manorrock.hummingbird.api.FileRepositoryItem;
-import java.io.File;
-import java.util.List;
-import java.util.stream.Stream;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.Test;
+import com.manorrock.hummingbird.api.VirtualFileSystem;
+import com.manorrock.hummingbird.api.VirtualFileFolder;
+import java.net.URI;
+import java.nio.file.Path;
 
 /**
- * The JUnit tests for the DefaultFileRepositoryFolder class.
- * 
+ * The Path VirtualFileSystem implementation.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class PathFileRepositoryFolderTest {
+public class PathFileSystem implements VirtualFileSystem {
+
+    /**
+     * Stores the root path.
+     */
+    private final Path rootPath;
     
     /**
-     * Test getItems method.
+     * Constructor.
+     * 
+     * @param rootPath the root path.
      */
-    @Test
-    public void testGetItems() {
-        PathFileRepository repository = new PathFileRepository(new File(".").toPath());
-        FileRepositoryFolder folder = repository.getRootFolder();
-        List<FileRepositoryItem> items = folder.getItems();
-        assertNotNull(items);
-        assertFalse(items.isEmpty());
+    public PathFileSystem(Path rootPath) {
+        this.rootPath = rootPath;
     }
     
     /**
-     * Test items method.
+     * Constructor.
+     * 
+     * @param rootUri the root Path as specified by the given URI.
      */
-    @Test
-    public void testItems() {
-        PathFileRepository repository = new PathFileRepository(new File(".").toPath());
-        FileRepositoryFolder folder = repository.getRootFolder();
-        Stream<FileRepositoryItem> items = folder.items();
-        assertNotNull(items);
-        assertTrue(items.count() > 0);
+    public PathFileSystem(URI rootUri) {
+        this.rootPath = Path.of(rootUri);
+    }
+    
+    @Override
+    public VirtualFileFolder getRootFolder() {
+        return new PathFileFolder(this, rootPath);
     }
 }

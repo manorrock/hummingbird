@@ -23,59 +23,46 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.path;
+package com.manorrock.hummingbird.file;
 
-import com.manorrock.hummingbird.api.FileRepositoryItem;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.File;
+import java.util.List;
+import java.util.stream.Stream;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import com.manorrock.hummingbird.api.VirtualFile;
+import com.manorrock.hummingbird.api.VirtualFileFolder;
 
 /**
- * The Path FileRepositoryItem implementation.
+ * The JUnit tests for the FileVirtualFileFolder class.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class PathFileRepositoryItem implements FileRepositoryItem {
-
-    /**
-     * Stores the file.
-     */
-    private Path file;
-
-    /**
-     * Stores the provider.
-     */
-    private PathFileRepository repository;
+public class FileVirtualFileFolderTest {
     
     /**
-     * Constructor.
-     * 
-     * @param repository the file repository.
-     * @param file the file.
+     * Test getFiles method.
      */
-    public PathFileRepositoryItem(PathFileRepository repository, Path file) {
-        this.file = file;
-        this.repository = repository;
+    @Test
+    public void testGetFiles() {
+        FileVirtualFileSystem fileSystem = new FileVirtualFileSystem(new File("."));
+        VirtualFileFolder folder = fileSystem.getRootFolder();
+        List<VirtualFile> items = folder.getFiles();
+        assertNotNull(items);
+        assertFalse(items.isEmpty());
     }
     
     /**
-     * As an input stream.
-     * 
-     * @return an input stream, or null if not found.
+     * Test files method.
      */
-    @Override
-    public InputStream asInputStream() {
-        InputStream result = null;
-        PipedOutputStream pipedOutput = new PipedOutputStream();
-        try {
-            result = new PipedInputStream(pipedOutput);
-            Files.copy(file, pipedOutput);
-        } catch (IOException ioe) {
-            // swallowed up on purpose.
-        }
-        return result;
+    @Test
+    public void testFiles() {
+        FileVirtualFileSystem fileSystem = new FileVirtualFileSystem(new File("."));
+        VirtualFileFolder folder = fileSystem.getRootFolder();
+        Stream<VirtualFile> items = folder.files();
+        assertNotNull(items);
+        assertTrue(items.count() > 0);
     }
 }

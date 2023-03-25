@@ -26,17 +26,35 @@
  */
 package com.manorrock.hummingbird.api;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 /**
- * A file repository.
+ * A virtual file folder.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public interface FileRepository {
+public interface VirtualFileFolder {
+    
+    /**
+     * Get the file specified by the relative name.
+     * 
+     * @param name the name.
+     * @return the item if found, null otherwise.
+     */
+    public VirtualFile getFile(String name);
 
     /**
-     * Get the root folder.
-     *
-     * @return the root folder.
+     * Get the files in this folder.
+     * 
+     * @return the files in this folder.
      */
-    FileRepositoryFolder getRootFolder();
+    List<VirtualFile> getFiles();
+    
+    /**
+     * Get the files in this folder excluding any folders.
+     * 
+     * @return the files in this folder.
+     */
+    Stream<VirtualFile> files();
 }

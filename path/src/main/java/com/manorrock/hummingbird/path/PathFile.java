@@ -23,42 +23,59 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.hummingbird.calico;
+package com.manorrock.hummingbird.path;
 
-import java.net.URI;
-import com.manorrock.hummingbird.api.FileRepositoryItem;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import com.manorrock.hummingbird.api.VirtualFile;
 
 /**
- * The Manorrock Calico FileRepositoryItem implementation.
+ * The Path VirtualFile implementation.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class CalicoRepositoryFile implements FileRepositoryItem {
+public class PathFile implements VirtualFile {
 
     /**
-     * Stores the provider.
+     * Stores the file.
      */
-    private CalicoRepository repository;
-    
+    private Path file;
+
     /**
-     * Stores the URI.
+     * Stores the file system.
      */
-    private URI uri;
+    private PathFileSystem fileSystem;
     
     /**
      * Constructor.
      * 
-     * @param repository the file repository.
-     * @param uri the URI.
+     * @param fileSystem the file system.
+     * @param file the file.
      */
-    public CalicoRepositoryFile(CalicoRepository repository, URI uri) {
-        this.repository = repository;
-        this.uri = uri;
+    public PathFile(PathFileSystem fileSystem, Path file) {
+        this.file = file;
+        this.fileSystem = fileSystem;
     }
-
+    
+    /**
+     * As an input stream.
+     * 
+     * @return an input stream, or null if not found.
+     */
     @Override
     public InputStream asInputStream() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        InputStream result = null;
+        PipedOutputStream pipedOutput = new PipedOutputStream();
+        try {
+            result = new PipedInputStream(pipedOutput);
+            Files.copy(file, pipedOutput);
+        } catch (IOException ioe) {
+            // swallowed up on purpose.
+        }
+        return result;
     }
 }
