@@ -21,9 +21,10 @@
     </licenses>
     <modules>
         <module>api</module>
+        <module>azure-blob</module>
+        <module>azure-files</module>
         <module>calico</module>
         <module>file</module>
-        <module>azure-blob</module>
         <module>git</module>
         <module>maven</module>
         <module>path</module>
