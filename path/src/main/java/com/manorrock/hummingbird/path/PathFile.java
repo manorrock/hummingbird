@@ -32,6 +32,7 @@ import java.io.PipedOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import com.manorrock.hummingbird.api.VirtualFile;
+import java.util.List;
 
 /**
  * The Path VirtualFile implementation.
@@ -77,5 +78,16 @@ public class PathFile implements VirtualFile {
             // swallowed up on purpose.
         }
         return result;
+    }
+
+    @Override
+    public VirtualFile getFile(String path) {
+        Path newPath = Path.of(file.toString(), path).normalize();
+        return new PathFile(fileSystem, newPath);
+    }
+
+    @Override
+    public List<VirtualFile> getFiles() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

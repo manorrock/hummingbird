@@ -25,9 +25,9 @@
  */
 package com.manorrock.hummingbird.calico;
 
-import java.net.URI;
 import java.io.InputStream;
 import com.manorrock.hummingbird.api.VirtualFile;
+import java.util.List;
 
 /**
  * The Manorrock Calico VirtualFile implementation.
@@ -42,23 +42,33 @@ public class CalicoFile implements VirtualFile {
     private CalicoFileSystem fileSystem;
     
     /**
-     * Stores the URI.
+     * Stores the path.
      */
-    private URI uri;
+    private String path;
     
     /**
      * Constructor.
      * 
      * @param fileSsytem the file system.
-     * @param uri the URI.
+     * @param path the path.
      */
-    public CalicoFile(CalicoFileSystem fileSsytem, URI uri) {
+    public CalicoFile(CalicoFileSystem fileSsytem, String path) {
         this.fileSystem = fileSsytem;
-        this.uri = uri;
+        this.path = path;
     }
 
     @Override
     public InputStream asInputStream() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public VirtualFile getFile(String path) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<VirtualFile> getFiles() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

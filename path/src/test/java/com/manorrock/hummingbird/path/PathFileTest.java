@@ -25,7 +25,7 @@
  */
 package com.manorrock.hummingbird.path;
 
-import com.manorrock.hummingbird.api.VirtualFileFolder;
+import com.manorrock.hummingbird.api.VirtualFile;
 import java.io.File;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ public class PathFileTest {
     @Test
     public void testAsInputStream() {
         PathFileSystem fileSystem = new PathFileSystem(new File(".").toPath());
-        VirtualFileFolder folder = fileSystem.getRootFolder();
+        VirtualFile folder = fileSystem.getRootFolder();
         assertNotNull(folder.getFile("pom.xml").asInputStream());
     }
 }

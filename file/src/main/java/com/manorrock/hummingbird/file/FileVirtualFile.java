@@ -30,6 +30,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import com.manorrock.hummingbird.api.VirtualFile;
+import java.util.List;
 
 /**
  * The File VirtualFile implementation.
@@ -73,5 +74,16 @@ public class FileVirtualFile implements VirtualFile {
             // swallowed up on purpose.
         }
         return result;
+    }
+
+    @Override
+    public VirtualFile getFile(String path) {
+        File newFile = new File(file, path);
+        return new FileVirtualFile(fileSystem, newFile);
+    }
+
+    @Override
+    public List<VirtualFile> getFiles() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

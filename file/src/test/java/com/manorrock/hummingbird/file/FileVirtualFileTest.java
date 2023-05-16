@@ -25,10 +25,10 @@
  */
 package com.manorrock.hummingbird.file;
 
+import com.manorrock.hummingbird.api.VirtualFile;
 import java.io.File;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
-import com.manorrock.hummingbird.api.VirtualFileFolder;
 
 /**
  * The JUnit tests for the FileVirtualFile class.
@@ -43,7 +43,7 @@ public class FileVirtualFileTest {
     @Test
     public void testAsInputStream() {
         FileVirtualFileSystem fileSystem = new FileVirtualFileSystem(new File("."));
-        VirtualFileFolder folder = fileSystem.getRootFolder();
+        VirtualFile folder = fileSystem.getRootFolder();
         assertNotNull(folder.getFile("pom.xml").asInputStream());
     }
 }

@@ -28,6 +28,7 @@ package com.manorrock.hummingbird.azure.files;
 import java.io.InputStream;
 import com.manorrock.hummingbird.api.VirtualFile;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * The File VirtualFile implementation.
@@ -37,9 +38,9 @@ import java.io.IOException;
 public class AzureFileVirtualFile implements VirtualFile {
 
     /**
-     * Stores the filename.
+     * Stores the path.
      */
-    private final String filename;
+    private final String path;
 
     /**
      * Stores the file system.
@@ -47,21 +48,14 @@ public class AzureFileVirtualFile implements VirtualFile {
     private final AzureFileVirtualFileSystem fileSystem;
     
     /**
-     * Stores the folder.
-     */
-    private final String folder;
-    
-    /**
      * Constructor.
      * 
      * @param fileSystem the file system.
-     * @param folder the folder.
-     * @param filename the filename.
+     * @param path the path.
      */
-    public AzureFileVirtualFile(AzureFileVirtualFileSystem fileSystem, String folder, String filename) {
-        this.filename = filename;
+    public AzureFileVirtualFile(AzureFileVirtualFileSystem fileSystem, String path) {
         this.fileSystem = fileSystem;
-        this.folder = folder;
+        this.path = path;
     }
     
     /**
@@ -72,9 +66,19 @@ public class AzureFileVirtualFile implements VirtualFile {
     @Override
     public InputStream asInputStream() {
         try {
-            return fileSystem.getInputStream(folder, filename);
+            return fileSystem.getInputStream(path);
         } catch(IOException ioe) {
             return null;
         }
+    }
+
+    @Override
+    public VirtualFile getFile(String path) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<VirtualFile> getFiles() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

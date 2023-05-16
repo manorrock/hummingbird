@@ -27,6 +27,7 @@
 package com.manorrock.hummingbird.api;
 
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * A virtual file.
@@ -35,6 +36,21 @@ import java.io.InputStream;
  */
 public interface VirtualFile {
     
+    /**
+     * Get a file for the given path.
+     * 
+     * @param path the path.
+     * @return the virtual file (or null if not found).
+     */
+    VirtualFile getFile(String path);
+
+    /**
+     * Get a list of files.
+     * 
+     * @return the list of files.
+     */
+    List<VirtualFile> getFiles();
+ 
     /**
      * As an input stream.
      * 

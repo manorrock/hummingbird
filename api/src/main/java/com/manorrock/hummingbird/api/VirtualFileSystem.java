@@ -38,5 +38,5 @@ public interface VirtualFileSystem {
      *
      * @return the root folder.
      */
-    VirtualFileFolder getRootFolder();
+    VirtualFile getRootFolder();
 }

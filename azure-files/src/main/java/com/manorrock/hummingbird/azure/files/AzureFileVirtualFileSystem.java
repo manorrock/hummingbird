@@ -28,7 +28,6 @@ package com.manorrock.hummingbird.azure.files;
 import com.azure.storage.file.share.ShareClient;
 import com.azure.storage.file.share.ShareClientBuilder;
 import com.manorrock.hummingbird.api.VirtualFile;
-import com.manorrock.hummingbird.api.VirtualFileFolder;
 import com.manorrock.hummingbird.api.VirtualFileSystem;
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,39 +66,41 @@ public class AzureFileVirtualFileSystem implements VirtualFileSystem {
     }
         
     @Override
-    public VirtualFileFolder getRootFolder() {
-        return new AzureFileVirtualFileFolder(this, "");
+    public VirtualFile getRootFolder() {
+        return new AzureFileVirtualFile(this, "");
     }
 
     /**
-     * Get the files for the given folder.
+     * Get the files for the given path.
      * 
-     * @param folder the folder.
+     * @param path the path.
      * @return the files (if any).
      */
-    List<VirtualFile> getFiles(String folder) {
-        return client.getDirectoryClient(folder)
-                // get all files/directories
-                .listFilesAndDirectories()                                      
-                .stream()
-                // filter out directories
-                .filter(i -> !i.isDirectory())
-                // convert ShareFileItem to AzureFileVirtualFile
-                .map(i -> new AzureFileVirtualFile(this, folder, i.getName())) 
-                // collect it all in a list
-                .collect(Collectors.toList());
+    public List<VirtualFile> getFiles(String path) {
+        return null;
+        
+//        return client.getDirectoryClient(folder)
+//                // get all files/directories
+//                .listFilesAndDirectories()                                      
+//                .stream()
+//                // filter out directories
+//                .filter(i -> !i.isDirectory())
+//                // convert ShareFileItem to AzureFileVirtualFile
+//                .map(i -> new AzureFileVirtualFile(this, folder, i.getName())) 
+//                // collect it all in a list
+//                .collect(Collectors.toList());
     }
     
     /**
      * Get an InputStream for the given file.
      * 
-     * @param folder the folder
-     * @param filename the filename.
+     * @param path the path.
+     * @return the input stream.
      * @throws IOException when an I/O error occurs.
      */
-    InputStream getInputStream(String folder, String filename) throws IOException {
+    public InputStream getInputStream(String path) throws IOException {
         PipedOutputStream outputStream = new PipedOutputStream();
-        client.getDirectoryClient(folder).getFileClient(filename).download(outputStream);
+        client.getFileClient(path).download(outputStream);
         return new PipedInputStream(outputStream);
     }
 }

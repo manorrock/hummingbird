@@ -25,10 +25,10 @@
  */
 package com.manorrock.hummingbird.file;
 
+import com.manorrock.hummingbird.api.VirtualFile;
 import java.io.File;
 import java.net.URI;
 import java.nio.file.Path;
-import com.manorrock.hummingbird.api.VirtualFileFolder;
 import com.manorrock.hummingbird.api.VirtualFileSystem;
 
 /**
@@ -62,7 +62,7 @@ public class FileVirtualFileSystem implements VirtualFileSystem {
     }
     
     @Override
-    public VirtualFileFolder getRootFolder() {
-        return new FileVirtualFileFolder(this, rootDirectory);
+    public VirtualFile getRootFolder() {
+        return new FileVirtualFile(this, rootDirectory);
     }
 }

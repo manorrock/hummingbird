@@ -25,8 +25,8 @@
  */
 package com.manorrock.hummingbird.calico;
 
+import com.manorrock.hummingbird.api.VirtualFile;
 import java.net.URI;
-import com.manorrock.hummingbird.api.VirtualFileFolder;
 import com.manorrock.hummingbird.api.VirtualFileSystem;
 
 /**
@@ -51,7 +51,7 @@ public class CalicoFileSystem implements VirtualFileSystem {
     }
     
     @Override
-    public VirtualFileFolder getRootFolder() {
-        return new CalicoFileFolder(this);
+    public VirtualFile getRootFolder() {
+        return new CalicoFile(this, "");
     }
 }
