@@ -50,6 +50,15 @@ public interface VirtualFile {
      * @return the list of files.
      */
     List<VirtualFile> getFiles();
+    
+    /**
+     * Is this file a directory.
+     * 
+     * @return true if it is, false otherwise.
+     */
+    default boolean isDirectory() {
+        return false;
+    }
  
     /**
      * As an input stream.
