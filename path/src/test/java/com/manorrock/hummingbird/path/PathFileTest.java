@@ -27,7 +27,9 @@ package com.manorrock.hummingbird.path;
 
 import com.manorrock.hummingbird.api.VirtualFile;
 import java.io.File;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -45,5 +47,17 @@ public class PathFileTest {
         PathFileSystem fileSystem = new PathFileSystem(new File(".").toPath());
         VirtualFile folder = fileSystem.getRootFolder();
         assertNotNull(folder.getFile("pom.xml").asInputStream());
+    }
+    
+    /**
+     * Test isDirectory method.
+     */
+    @Test
+    public void testIsDirectory() {
+        PathFileSystem fileSystem = new PathFileSystem(new File(".").toPath());
+        VirtualFile folder = fileSystem.getRootFolder();
+        assertTrue(folder.isDirectory());
+        VirtualFile file = folder.getFile("pom.xml");
+        assertFalse(file.isDirectory());
     }
 }
