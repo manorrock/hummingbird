@@ -86,4 +86,9 @@ public class FileVirtualFile implements VirtualFile {
     public List<VirtualFile> getFiles() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public boolean isDirectory() {
+        return file.isDirectory();
+    }
 }
