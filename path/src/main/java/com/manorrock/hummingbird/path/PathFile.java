@@ -32,6 +32,8 @@ import java.io.PipedOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import com.manorrock.hummingbird.api.VirtualFile;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,7 +46,7 @@ public class PathFile implements VirtualFile {
     /**
      * Stores the file.
      */
-    private Path file;
+    private Path path;
 
     /**
      * Stores the file system.
@@ -55,10 +57,10 @@ public class PathFile implements VirtualFile {
      * Constructor.
      * 
      * @param fileSystem the file system.
-     * @param file the file.
+     * @param path the path.
      */
-    public PathFile(PathFileSystem fileSystem, Path file) {
-        this.file = file;
+    public PathFile(PathFileSystem fileSystem, Path path) {
+        this.path = path;
         this.fileSystem = fileSystem;
     }
     
@@ -73,7 +75,7 @@ public class PathFile implements VirtualFile {
         PipedOutputStream pipedOutput = new PipedOutputStream();
         try {
             result = new PipedInputStream(pipedOutput);
-            Files.copy(file, pipedOutput);
+            Files.copy(path, pipedOutput);
         } catch (IOException ioe) {
             // swallowed up on purpose.
         }
@@ -82,17 +84,24 @@ public class PathFile implements VirtualFile {
 
     @Override
     public VirtualFile getFile(String path) {
-        Path newPath = Path.of(file.toString(), path).normalize();
+        Path newPath = Path.of(path.toString(), path).normalize();
         return new PathFile(fileSystem, newPath);
     }
 
     @Override
     public List<VirtualFile> getFiles() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        File[] files = path.toFile().listFiles();
+        ArrayList<VirtualFile> result = new ArrayList<>();
+        if (files.length > 0) {
+            for (File file : files) {
+                result.add(new PathFile(fileSystem, file.toPath()));
+            }
+        }
+        return result;
     }
 
     @Override
     public boolean isDirectory() {
-        return file.toFile().isDirectory();
+        return path.toFile().isDirectory();
     }
 }
