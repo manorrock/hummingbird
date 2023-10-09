@@ -4,3 +4,7 @@
 
 This project delivers you with a variety of VirtualFileSystem implementations
 that mimic a file/directory like structure.
+
+## How do I contribute?
+
+See [Contributing](CONTRIBUTING.md)
