@@ -19,6 +19,13 @@
             <url>https://github.com/manorrock/hummingbird/blob/master/LICENSE</url>
         </license>
     </licenses>
+    <properties>
+        <!-- other -->
+        <java.version>21</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- plugins -->
+        <jacaco-maven-plugin.version>0.8.10</jacaco-maven-plugin.version>
+    </properties>
     <modules>
         <module>api</module>
         <module>azure-blob</module>
@@ -60,7 +67,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.8</version>
+                    <version>${jacaco-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
@@ -75,7 +82,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <inherited>true</inherited>
                 <configuration>
-                    <release>17</release>
+                    <release>${java.version}</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -216,9 +223,6 @@
             </build>
         </profile>
     </profiles>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
     <scm>
         <connection>scm:git:git://github.com/manorrock/hummingbird.git</connection>
         <developerConnection>scm:git:git@github.com:manorrock/hummingbird.git</developerConnection>
