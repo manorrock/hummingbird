@@ -9,4 +9,12 @@
     <artifactId>hummingbird-maven</artifactId>
     <packaging>jar</packaging>
     <name>Manorrock Hummingbird - Maven Repository</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.manorrock.hummingbird</groupId>
+            <artifactId>hummingbird-api</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 </project>
