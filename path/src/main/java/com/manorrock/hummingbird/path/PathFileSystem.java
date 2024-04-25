@@ -25,17 +25,23 @@
  */
 package com.manorrock.hummingbird.path;
 
-import com.manorrock.hummingbird.api.VirtualFile;
-import com.manorrock.hummingbird.api.VirtualFileSystem;
+import java.io.IOException;
 import java.net.URI;
+import java.nio.file.FileStore;
+import java.nio.file.FileSystem;
 import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.WatchService;
+import java.nio.file.attribute.UserPrincipalLookupService;
+import java.nio.file.spi.FileSystemProvider;
+import java.util.Set;
 
 /**
  * The Path VirtualFileSystem implementation.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class PathFileSystem implements VirtualFileSystem {
+public class PathFileSystem extends FileSystem {
 
     /**
      * Stores the root path.
@@ -60,8 +66,70 @@ public class PathFileSystem implements VirtualFileSystem {
         this.rootPath = Path.of(rootUri);
     }
     
+    /*
     @Override
     public VirtualFile getRootFolder() {
         return new PathFile(this, rootPath);
+    }
+    */
+
+    @Override
+    public FileSystemProvider provider() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void close() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isOpen() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isReadOnly() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getSeparator() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Iterable<Path> getRootDirectories() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Iterable<FileStore> getFileStores() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Set<String> supportedFileAttributeViews() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Path getPath(String first, String... more) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public PathMatcher getPathMatcher(String syntaxAndPattern) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public UserPrincipalLookupService getUserPrincipalLookupService() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public WatchService newWatchService() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -28,19 +28,26 @@ package com.manorrock.hummingbird.azure.blob;
 import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobClientBuilder;
 import com.manorrock.hummingbird.api.VirtualFile;
-import com.manorrock.hummingbird.api.VirtualFileSystem;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.nio.file.FileStore;
+import java.nio.file.FileSystem;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.WatchService;
+import java.nio.file.attribute.UserPrincipalLookupService;
+import java.nio.file.spi.FileSystemProvider;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The Azure Files VirtualFileSystem implementation.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class AzureBlobVirtualFileSystem implements VirtualFileSystem {
+public class AzureBlobVirtualFileSystem extends FileSystem {
 
     /**
      * Stores the client.
@@ -60,11 +67,13 @@ public class AzureBlobVirtualFileSystem implements VirtualFileSystem {
                 .sasToken(sasToken)
                 .buildClient();
     }
-        
+
+    /*
     @Override
     public VirtualFile getRootFolder() {
         return new AzureBlobVirtualFile(this, "");
     }
+    */
 
     /**
      * Get the files for the given path.
@@ -98,5 +107,65 @@ public class AzureBlobVirtualFileSystem implements VirtualFileSystem {
         PipedOutputStream outputStream = new PipedOutputStream();
         client.downloadStream(outputStream);
         return new PipedInputStream(outputStream);
+    }
+
+    @Override
+    public FileSystemProvider provider() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void close() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isOpen() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isReadOnly() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getSeparator() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Iterable<Path> getRootDirectories() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Iterable<FileStore> getFileStores() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Set<String> supportedFileAttributeViews() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Path getPath(String first, String... more) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public PathMatcher getPathMatcher(String syntaxAndPattern) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public UserPrincipalLookupService getUserPrincipalLookupService() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public WatchService newWatchService() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
