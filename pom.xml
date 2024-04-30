@@ -41,7 +41,6 @@
         <module>azure-blob</module>
         <module>azure-files</module>
         <module>calico</module>
-        <module>file</module>
         <module>git</module>
         <module>maven</module>
     </modules>
